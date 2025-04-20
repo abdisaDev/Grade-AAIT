@@ -36,7 +36,6 @@ export async function checkGrade(payload) {
     await page.close();
     return extractedData;
   } catch (error) {
-    console.error("❌ Scraper error:", error);
     return { error: error.message };
   } finally {
     await browser.close();
