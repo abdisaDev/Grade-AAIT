@@ -1,8 +1,11 @@
 import puppeteer, { Page } from "puppeteer";
 
-export async function test() {
+export async function checkGrade(payload: {
+  username: string;
+  password: string;
+}) {
   const browser = await puppeteer.launch({
-    headless: false, // or `true` for older Puppeteer versions
+    headless: true,
     executablePath: "/usr/bin/google-chrome",
   });
 
@@ -10,8 +13,8 @@ export async function test() {
 
   await page.goto("https://portal.aait.edu.et");
 
-  await page.type('input[name="UserName"]', "ate/2603/14");
-  await page.type('input[name="Password"]', "8871");
+  await page.type('input[name="UserName"]', payload.username);
+  await page.type('input[name="Password"]', payload.password);
 
   await page.click("button.btn");
 
