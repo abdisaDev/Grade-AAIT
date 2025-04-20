@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 export async function checkGrade(payload) {
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     args: [
       "--no-sandbox",
       "--single-process",
