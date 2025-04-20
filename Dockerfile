@@ -1,18 +1,12 @@
+FROM zenika/alpine-chrome:83-with-node-22
 
-FROM ghcr.io/puppeteer/puppeteer:24.6.1
-
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-
-
-WORKDIR /usr/src/app
+USER root
+ENV NODE_ENV=production
+WORKDIR /src
 
 COPY package*.json ./
-
-RUN npm i
+RUN npm install
 
 COPY . .
-
-
-CMD [ "node", "dist/index.js" ]
-
-EXPOSE 2423
+EXPOSE 8080
+CMD ["node" , "dist/.js"]
