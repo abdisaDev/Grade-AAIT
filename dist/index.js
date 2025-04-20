@@ -5,7 +5,7 @@ import { checkGrade } from "./scrape.js";
 const app = express();
 const PORT = process.env.PORT || 2423;
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.get("/", async (_req, res) => {
   res.send("Hello from EMS :)");
 });
