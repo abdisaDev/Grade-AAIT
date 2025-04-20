@@ -14,7 +14,9 @@ export async function checkGrade(payload) {
   await page.type('input[name="UserName"]', payload.username);
   await page.type('input[name="Password"]', payload.password);
   await page.click("button.btn");
-  await page.waitForResponse("https://portal.aait.edu.et/Home");
+  await page.waitForResponse("https://portal.aait.edu.et/Home", {
+    timeout: 99999999,
+  });
   await page.goto("https://portal.aait.edu.et/Grade/GradeReport");
   const extractedData = await extractGradeTableData(page);
   await page.close();
