@@ -8,10 +8,6 @@ export async function checkGrade(payload) {
       "--no-zygote",
       "--disable-setuid-sandbox",
     ],
-    executablePath:
-      process.env.NODE_ENV === "production"
-        ? process.env.PUPPETEER_EXECUTABLE_PATH
-        : puppeteer.executablePath(),
   });
   const page = await browser.newPage();
   await page.goto("https://portal.aait.edu.et");
