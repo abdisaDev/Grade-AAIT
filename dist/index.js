@@ -14,6 +14,7 @@ app.post("/grades", async (_req, res) => {
   const grades = await checkGrade(payload);
   res.send(grades);
 });
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

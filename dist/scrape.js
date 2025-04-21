@@ -26,6 +26,38 @@ export async function checkGrade(payload) {
       page.click("button.btn"),
     ]);
 
+    const errorMessages = [
+      "Invalid credentials.",
+      "Incorrect username or password.",
+    ];
+
+    let foundErrorMessageText = null;
+
+    const allLiInnerTexts = await page
+      .$$eval("li", (elements) => {
+        return elements.map((el) => el.innerText.trim());
+      })
+      .catch(() => {
+        return [];
+      });
+
+    for (const msg of errorMessages) {
+      foundErrorMessageText = allLiInnerTexts.find((text) =>
+        text.includes(msg)
+      );
+      if (foundErrorMessageText) {
+        break;
+      }
+    }
+
+    if (foundErrorMessageText) {
+      throw new Error(`Login failed: ${foundErrorMessageText}`);
+    }
+
+    await page.goto("https://portal.aait.edu.et/Grade/GradeReport", {
+      waitUntil: "domcontentloaded",
+    });
+
     await page.goto("https://portal.aait.edu.et/Grade/GradeReport", {
       waitUntil: "domcontentloaded",
     });
@@ -33,6 +65,7 @@ export async function checkGrade(payload) {
     await page.waitForSelector("table.table-bordered", { timeout: 10000 });
 
     const extractedData = await extractGradeTableData(page);
+
     await page.close();
     return extractedData;
   } catch (error) {
