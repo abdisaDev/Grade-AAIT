@@ -1,24 +1,35 @@
 import express from "express";
-import "dotenv/config";
 import cors from "cors";
-import { checkGrade } from "./scrape";
+import { scrapeGrades } from "./scrape";
 
 const app = express();
-const PORT = process.env.PORT;
+const port = 2423;
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-app.get("/", async (_req, res) => {
-  res.send("Hello from EMS :)");
+app.post("/scrape", async (req: any, res: any) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
+  }
+
+  try {
+    console.log(`[Server] Received scrape request for user: ${username}`);
+    const grades = await scrapeGrades(username, password);
+    console.log("[Server] Scraping successful, sending data.");
+    res.json(grades);
+  } catch (error: any) {
+    console.error("[Server] Scraping failed:", error.message);
+    res
+      .status(500)
+      .json({ error: "Failed to scrape grades. " + error.message });
+  }
 });
 
-app.post("/grades", async (_req, res) => {
-  const payload = _req.body;
-  const grades = await checkGrade(payload);
-  res.send(grades);
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`[Server] Listening on http://localhost:${port}`);
 });
