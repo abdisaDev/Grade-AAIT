@@ -8,7 +8,6 @@ export async function scrapeGrades(username, password) {
     try {
         browser = await puppeteer.launch({
             headless: true, // Keep this false for debugging, true for production
-            executablePath: "/usr/bin/google-chrome",
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
         });
         const page = await browser.newPage();
