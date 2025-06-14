@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { scrapeGrades } from "./scrape";
+import { scrapeGrades } from "./scrape.js";
 const app = express();
 const port = 2423;
 app.use(cors());
