@@ -39,6 +39,7 @@ export async function scrapeGrades(username, password) {
 }
 async function extractGradeTableData(page) {
     const rows = await page.$$("table.table-bordered.table-striped.table-hover tbody tr");
+    const rows = await page.$$("table.table-bordered.table-striped.table-hover tbody tr");
     const results = [];
     let currentYearSemester = null;
     for (const row of rows) {
