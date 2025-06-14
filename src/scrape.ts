@@ -13,7 +13,6 @@ export async function scrapeGrades(
   try {
     browser = await puppeteer.launch({
       headless: true, // Keep this false for debugging, true for production
-      executablePath: "/usr/bin/google-chrome",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
